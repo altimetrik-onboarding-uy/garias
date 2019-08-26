@@ -4,27 +4,33 @@ import Products from './components/Products';
 import Basket from './components/Basket';
 
 class App extends React.Component{
-  state = {products: [], type:'', filteredProducts: [], cartItems };
-
-
-  componentDidMount(){
-    this.handleChangeURL();
+  constructor(props){
+    super(props);
+    this.state = {products: [], type:'', filteredProducts: [], cartItems: [] };
+  this.handleProductChange = this.handleProductChange.bind(this);
+  this.handleAddToCart = this.handleAddToCart.bind(this);
+  this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
   }
 
-  async onChangeResponse(url){
-    const response = await fetch(url);
+
+ 
+
+  async componentDidMount(){
+    const response = await fetch('http://localhost:8000/products');
     const data = await response.json();
     this.setState({products: data})
+    this.listProducts();
     }
 
     
     handleProductChange = (e) => {
       this.setState({ type: e.target.value})
+      this.listProducts();
     }
     //crear otra funcion que retorne filteredProducts
     // despues eliminar todos los return de handleChangeURL
     // en handleChangeURL solo actualizar los estados 
-    handleChangeURL = () => {
+    /* handleChangeURL = () => {
       let url = ""
       if(state.type === ""){
          url = "https://api.bestbuy.com/v1/products"
@@ -42,7 +48,7 @@ class App extends React.Component{
         url = "FILTER URL GOES HERE"
         this.onChangeResponse(url)
         return {filteredProducts: this.state.products}
-    }
+    } */
 
     handleAddToCart = (e, product) => {
       this.setState(state => {
@@ -61,6 +67,23 @@ class App extends React.Component{
           return { cartItems: cartItems }
 
       });
+    }
+
+    listProducts = () => {
+      this.setState(state => {
+        if(state.type === "computers"){
+          return {filteredProducts: state.products.filter(a => a.category === "computers") }
+
+        }else if(state.type === "videogames"){
+          return {filteredProducts: state.products.filter(a => a.category === "videogames") }
+
+        }else if(state.type === "topseller"){
+          return {filteredProducts: state.products.filter(a => a.topseller === true) }
+           
+        }else if(state.type === ""){
+          return {filteredProducts: state.products}
+        }
+      })
     }
 
     handleRemoveFromCart = (e, product) => {

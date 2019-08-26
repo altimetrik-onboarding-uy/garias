@@ -2,14 +2,14 @@ import React from 'react';
 import util from '../util';
 
 
-export default class Products extends Component {
+export default class Products extends React.Component {
     render(){
         const productItems = this.props.products.map(product => (
-            <div className = "col-md-4" key={product.sku}>
+            <div className = "col-md-4" key={product.id}>
                 <div className= "thumbnail text-center">
-                    <img src={product.mediumImage} alt={product.title}/>
+                    <img src={`products/${product.sku}.png`} alt={product.title}/>
                     <p>{product.title}</p>
-                    <b>{util.formatCurrency(product.regularPrice)}</b>
+                    <b>{util.formatCurrency(product.price)}</b>
                     <button className="btn btn-primary" 
                     onClick={(e) => this.props.handleAddToCart(e, product)}>Add to Cart
                     </button>

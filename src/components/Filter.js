@@ -10,10 +10,10 @@ export default class Filter extends React.Component{
                 </div>
                 <div className="col-md-4">
                     <label> Filter
-                        <select className="form-control" value={this.props.type} >
+                        <select className="form-control" value={this.props.type} onChange={this.props.handleProductChange} >
                             <option value="">Select</option>
                             <option value="computers">Computers</option>
-                            <option value="videogame">Video Games</option>
+                            <option value="videogames">Video Games</option>
                             <option value="topseller">Top Seller</option>
                         </select>
                     </label>

@@ -1,0 +1,70 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "sku": 18644119330491312,
+        "title": "MacBook Pro (13-inch, 2019, Two Thunderbolt 3 ports)",
+        "description": "Sphynx Tie Dye Grey",
+        "category": "computers",
+        "price": 1299.00,
+        "isFreeShipping": true,
+        "topseller": true
+        
+      },
+  
+      {
+        "id": 2,
+        "sku": 11854078013954528,
+        "title": "MacBook Pro (15-inch, 2019)",
+        "description": "Danger Knife Grey",
+        "category": "computers",
+        "price": 1999.00,
+        "isFreeShipping": true,
+        "topseller": false
+      },
+  
+      {
+        "id": 3,
+        "sku": 876661122392077,
+        "title": "MacBook Pro (15-inch, 2017)",
+        "description": "White DGK Script",
+        "category": "computers",
+        "price": 999.00,
+        "isFreeShipping": true,
+        "topseller": false
+      },
+  
+      {
+        "id": 4,
+        "sku": 9197907543445677,
+        "title": "Sonic Adventures 3 (PS4)",
+        "description": "Born On The Streets",
+        "category": "videogames",
+        "price": 57.99,
+        "isFreeShipping": false,
+        "topseller": false
+      },
+  
+      {
+        "id": 5,
+        "sku": 10547961582846888,
+        "title": "Assassins Creed Origins(Xbox One)",
+        "description": "Tso 3D Short Sleeve",
+        "category": "videogames",
+        "price": 28.99,
+        "isFreeShipping": false,
+        "topseller": true
+      },
+  
+      {
+        "id": 6,
+        "sku": 6090484789343891,
+        "title": "Call of Duty Black Ops(PS4)",
+        "description": "Man Tie Dye Cinza Grey",
+        "category": "videogames",
+        "price": 35.99,
+        "isFreeShipping": false,
+        "topseller": true
+      }
+    ]
+  }
