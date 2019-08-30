@@ -1,12 +1,34 @@
 import React from 'react';
 import util from '../util';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 
 export default class Products extends React.Component {
+    
+    
+
+
     render(){
+
+        /* const popover = this.props.products.map (product => (
+            <Popover id="popover-basic">
+              <Popover.Title as="h3">{product.title}</Popover.Title>
+              <Popover.Content>
+                {product.description}
+              </Popover.Content>
+            </Popover>
+          )); */
+
+
         const productItems = this.props.products.map(product => (
-            <div className = "col-md-4" key={product.id}>
-                <div className= "thumbnail text-center">
+            
+            <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">
+            <p>
+              {product.description}
+            </p>
+            </Tooltip>}>
+                    <div className = "col-lg-4 col-auto" key={product.id}>
+                    <div className= " product thumbnail text-center">
                     <img src={`products/${product.sku}.png`} alt={product.title}/>
                     <p>{product.title}</p>
                     <b>{util.formatCurrency(product.price)}</b>
@@ -15,6 +37,9 @@ export default class Products extends React.Component {
                     </button>
                 </div>
             </div>
+            </OverlayTrigger>
+            
+            
 
         ));
 

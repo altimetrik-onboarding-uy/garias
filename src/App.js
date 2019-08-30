@@ -2,6 +2,8 @@ import React from 'react';
 import Filter from './components/Filter';
 import Products from './components/Products';
 import Basket from './components/Basket';
+import './App.css';
+
 
 class App extends React.Component{
   constructor(props){
@@ -96,7 +98,7 @@ class App extends React.Component{
 
   render(){
     return(
-      <div className="container">
+      <div className="container" >
         <h1>Best Store</h1>
         <hr/>
         <div className="row">

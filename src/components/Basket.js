@@ -17,10 +17,10 @@ export default class Basket extends React.Component {
             {cartItems.length > 0 &&
                 <div>
                     {cartItems.map(item => (
-                        <div className="alert alert-dismissible alert-light">
+                        <div className="alert alert-dismissible alert-light" key={item.sku}>
                         <button type="button" className="close" data-dismiss="alert" 
                         onClick={(e) => this.props.handleRemoveFromCart(e, item)}>&times;</button>
-                        <span class="badge badge-warning">{item.count}X</span> <strong>{item.title}</strong> {util.formatCurrency(item.price)}
+                        <span className="badge badge-warning">{item.count}x</span> <strong>{item.title}</strong> {util.formatCurrency(item.price)}
                         </div>
                     ))}
                 
