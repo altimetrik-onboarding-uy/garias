@@ -1,0 +1,49 @@
+import React from 'react';
+import util from '../util';
+import { connect } from 'react-redux';
+import { removeFromCart } from '../actions/productActions';
+
+
+class Basket extends React.Component {
+    render(){
+        const {cartItems} = this.props;
+
+         return(
+            <div className="card text-white bg-primary mb-3" style={{maxWidth: '20rem' }}>
+            <div className="card-header">Shopping Cart</div>
+            <div className="card-body">
+            <h4 className="card-title">Order Summary</h4>
+            {cartItems.length === 0 ? "Basket is empty" : 
+            <div>You have {cartItems.length} items in the basket. <hr /></div>
+            }
+            {cartItems.length > 0 &&
+                <div>
+                    {cartItems.map(item => (
+                        <div className="alert alert-dismissible alert-light" key={item.id}>
+                        <button type="button" className="close" data-dismiss="alert" 
+                        onClick={() => this.props.removeFromCart(this.props.cartItems, item)}>&times;</button>
+                        <span className="badge badge-warning">{item.count}x</span> <strong>{item.title}</strong> {util.formatCurrency(item.price)}
+                        </div>
+                    ))}
+                
+                <br/>
+                <b style = {{float: 'left'}}>TOTAL: {util.formatCurrency(cartItems.reduce((a, c) => (a + c.price * c.count), 0))}</b>
+                <button 
+                onClick={() => alert("Thank you for shopping at Best Store")} 
+                className="btn btn-primary" 
+                style={{float: 'right'}}>Checkout
+                </button>
+                </div>
+            }
+            </div>
+          </div>
+            
+        )
+    }
+}
+
+const mapStateToProps = state => ({
+    cartItems: state.cart.items
+})
+
+export default connect(mapStateToProps ,{ removeFromCart })(Basket);
