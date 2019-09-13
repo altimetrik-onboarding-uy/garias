@@ -1,18 +1,15 @@
 import React  from 'react';
 
 
-export default class Filter extends React.Component{
+class Filter extends React.Component{
     render(){
         return(
             <div className="row">
                 <div className="col-md-4">
-                    {this.props.count} products found.
-                </div>
-                <div className="col-md-4">
-                    <label> Filter
-                        <select className="form-control" value={this.props.type} onChange={this.props.handleProductChange} >
-                            <option value="">Select</option>
-                            <option value="computers">Computers</option>
+                    <label> Filter | {this.props.count} products found.
+                        <select className="form-control" value={this.props.type} onChange={(e) => this.props.handleProductChange(e)} >
+                            <option value="celulares">Select</option>
+                            <option value="iphone">iPhone</option>
                             <option value="videogames">Video Games</option>
                             <option value="topseller">Top Seller</option>
                         </select>
@@ -22,5 +19,8 @@ export default class Filter extends React.Component{
         )
     }
 }
+
+
+export default Filter
 
 

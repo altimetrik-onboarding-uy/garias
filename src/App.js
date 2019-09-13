@@ -2,33 +2,70 @@ import React from 'react';
 import Filter from './components/Filter';
 import Products from './components/Products';
 import Basket from './components/Basket';
-import './App.css';
+import { connect } from 'react-redux';
+import { filterProducts } from './actions/productActions';
+import  NavBar  from './components/NavBar';
 
 
 class App extends React.Component{
+
   constructor(props){
     super(props);
-    this.state = {products: [], type:'', filteredProducts: [], cartItems: [] };
-  this.handleProductChange = this.handleProductChange.bind(this);
-  this.handleAddToCart = this.handleAddToCart.bind(this);
-  this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
+    this.state = {products: [], type:""};
+    this.handleProductChange = this.handleProductChange.bind(this);
   }
 
 
- 
-
-  async componentDidMount(){
-    const response = await fetch('http://localhost:8000/products');
-    const data = await response.json();
-    this.setState({products: data})
-    this.listProducts();
+    componentDidMount(){
+      if(this.state.type === ""){
+        this.setState({type: "ofertas"});
+      }
+    this.handleFetch();
     }
+
+     handleFetch() {
+       setTimeout(async () => {
+        console.log(this.props.type);
+        const response = await fetch(`https://api.mercadolibre.com/sites/MLU/search?q=${this.state.type}`)
+        const data = await response.json();
+        this.setState({products: data.results});
+        console.log(this.state.products)
+      }, 1);
+      
+    }
+
+     /* filterChange = () => {
+      if(this.props.type === undefined){
+          this.handleFetch("celulares")
+      }
+    } */
 
     
     handleProductChange = (e) => {
-      this.setState({ type: e.target.value})
-      this.listProducts();
-    }
+      this.setState({ type: e.target.value});
+      this.handleFetch();
+    } 
+
+     /* handleProductChange = async (e) => {
+      console.log("1"+this.state.type)
+      this.setState({ type: e.target.value});
+
+      console.log("2"+this.state.type)
+      const response = await fetch(`https://api.mercadolibre.com/sites/MLU/search?q=${this.state.type}`)
+      .then(data => {
+        const coso = data.json();
+        return coso;
+      }).then(products => {
+        console.log(products)
+        this.setState({products});
+      }) */
+
+      // const data = await response.json();
+      // this.setState({products: response});
+      // console.log("3"+this.state.products) 
+
+      // this.handleFetch(this.state.type);
+    
     //crear otra funcion que retorne filteredProducts
     // despues eliminar todos los return de handleChangeURL
     // en handleChangeURL solo actualizar los estados 
@@ -52,66 +89,41 @@ class App extends React.Component{
         return {filteredProducts: this.state.products}
     } */
 
-    handleAddToCart = (e, product) => {
-      this.setState(state => {
-        const cartItems = state.cartItems;
-        let productInCart  = false;
+    
 
-        cartItems.forEach(item => {
-          if(item.sku === product.sku){
-            productInCart = true; 
-            item.count++;
-           }
-          });
-          if(!productInCart){
-            cartItems.push({...product, count: 1});
-          }
-          return { cartItems: cartItems }
+     /* listProducts = () => {
+        if(this.state.type === "iphone"){
+        this.setState({searchType:"iphone"})
 
-      });
-    }
+         
+        return {filteredProducts: this.state.products}
 
-    listProducts = () => {
-      this.setState(state => {
-        if(state.type === "computers"){
-          return {filteredProducts: state.products.filter(a => a.category === "computers") }
+        }else if(this.state.type === ""){
+          return {filteredProducts: this.state.products}
+        } 
+    }  */
 
-        }else if(state.type === "videogames"){
-          return {filteredProducts: state.products.filter(a => a.category === "videogames") }
 
-        }else if(state.type === "topseller"){
-          return {filteredProducts: state.products.filter(a => a.topseller === true) }
-           
-        }else if(state.type === ""){
-          return {filteredProducts: state.products}
-        }
-      })
-    }
-
-    handleRemoveFromCart = (e, product) => {
-      this.setState(state =>{
-        const cartItems = state.cartItems.filter(item => item.sku !== product.sku);
-        return { cartItems: cartItems };
-      })
-    }
+    
 
 
   render(){
     return(
       <div className="container" >
-        <h1>Best Store</h1>
-        <hr/>
+        <NavBar/>
         <div className="row">
           <div className="col-md-9">
           <Filter 
-           count={this.state.filteredProducts.length}
-           handleProductChange={this.handleProductChange}/>
-          <hr />
+           count={this.state.products.length}
+           handleProductChange={this.handleProductChange}
+           />
+          <hr/>
           <Products
-           products={this.state.filteredProducts}
+           products={this.state.products}
            handleAddToCart={this.handleAddToCart}/>
           </div>
           <div className="col-md-3">
+          <br/>
           <Basket cartItems={this.state.cartItems}
            handleRemoveFromCart={this.handleRemoveFromCart}/>
           </div>
@@ -120,6 +132,7 @@ class App extends React.Component{
     )
   }
 }
+
 
 
 export default App;
